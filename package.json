@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "vite-plugin-pwa": "^0.15.1",
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "workbox-strategies": "^6.6.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",

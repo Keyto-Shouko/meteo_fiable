@@ -4,7 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(),VitePWA({
+  plugins: [vue(), VitePWA({
     registerType: 'autoUpdate',
     manifest: {
       name: 'Météo Fiable',
@@ -12,6 +12,9 @@ export default defineConfig({
       short_name: 'Météo',
       description: 'A super Météo app',
       theme_color: '##c49129',
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.js',
       icons: [
         {
           src: 'icon-192x192.png',
