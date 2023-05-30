@@ -3,7 +3,7 @@
 
 
 <script>
-
+navigator.serviceWorker.register("sw.js");
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -11,12 +11,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 // Initialize Firebase
-let apiKey= import.meta.env.VITE_API_KEY
-let authDomain= import.meta.env.VITE_AUTH_DOMAIN
-let projectID= import.meta.env.VITE_PROJECT_ID
-let storageBucket= import.meta.env.VITE_STORAGE_BUCKET
-let messaginSenderID= import.meta.env.VITE_MESSAGING_SENDER_ID
-let appId= import.meta.env.VITE_APP_ID
+let apiKey = import.meta.env.VITE_API_KEY
+let authDomain = import.meta.env.VITE_AUTH_DOMAIN
+let projectID = import.meta.env.VITE_PROJECT_ID
+let storageBucket = import.meta.env.VITE_STORAGE_BUCKET
+let messaginSenderID = import.meta.env.VITE_MESSAGING_SENDER_ID
+let appId = import.meta.env.VITE_APP_ID
 
 let firebaseConfig = {
   apiKey: apiKey,
@@ -59,16 +59,19 @@ export default {
       }
     },
     sendNotification() {
-      window.navigator.vibrate([100,30,100,30,100,30,200,30,200,30,200,30,100,30,100,30,100]); //
+      window.navigator.vibrate([100, 30, 100, 30, 100, 30, 200, 30, 200, 30, 200, 30, 100, 30, 100, 30, 100]); //
       //send a notification to the player
       let notification
       if (Notification.permission === 'granted') {
-        notification = new Notification(`Info météo`, {
-          body: 'Des infos sur la météo',
-          // Other optional options: icon, badge, etc.
-          icon: '/chad.png',
+        navigator.serviceWorker.ready.then((registration) => {
+          registration.showNotification("Info météo", {
+            body: "Des infos sur la météo",
+            icon: "/chad.png",
+            vibrate: [250, 100, 300],
+            tag: "vibration-sample",
+          });
         });
-        
+
         if (navigator.setAppBadge) {
           console.log("The App Badging API is supported!");
           navigator.setAppBadge();
@@ -105,7 +108,7 @@ export default {
       this.sendNotification()
     }, 15000);
   },
-  created(){
+  created() {
     window.addEventListener("beforeinstallprompt", (e) => {
       console.log("e", e)
       e.preventDefault();
@@ -116,9 +119,9 @@ export default {
       this.deferredPrompt = null;
     });
   },
-  updated(){
+  updated() {
     console.log("updated")
-    console.log("this.deferredPrompt", this.deferredPrompt) 
+    console.log("this.deferredPrompt", this.deferredPrompt)
   }
 }
 
