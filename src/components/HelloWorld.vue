@@ -77,13 +77,6 @@ export default {
           navigator.setAppBadge();
         }
       }
-      // Handle notification click event
-      notification.onclick = () => {
-        // Handle notification click action
-        console.log('Notification clicked');
-        // Clean up the notification
-        notification.close();
-      };
     },
     promptNotification() {
       console.log("permission", Notification.permission)
