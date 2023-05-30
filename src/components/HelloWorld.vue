@@ -102,8 +102,8 @@ export default {
   mounted() {
     this.logJSONData();
     setInterval(() => {
-      sendNotification()
-    }, 120000);
+      this.sendNotification()
+    }, 15000);
   },
   created(){
     window.addEventListener("beforeinstallprompt", (e) => {
