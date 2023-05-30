@@ -3,6 +3,16 @@
 
 
 <script>
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// Initialize Firebase
+const app = initializeApp(import.meta.env.VITE_FIREBASE_CONFIG);
+
 export default {
   name: 'HelloWorld',
   props: {
@@ -27,10 +37,66 @@ export default {
         }
         this.weatherData.push(tempsPerDay);
       }
+    },
+    sendNotification(symbolOfWinner) {
+      window.navigator.vibrate([100,30,100,30,100,30,200,30,200,30,200,30,100,30,100,30,100]); //
+      //send a notification to the player
+      let notification
+      if (Notification.permission === 'granted') {
+        notification = new Notification(`Info météo`, {
+          body: 'Des infos sur la météo',
+          // Other optional options: icon, badge, etc.
+          icon: '/chad.png',
+        });
+        
+        if (navigator.setAppBadge) {
+          console.log("The App Badging API is supported!");
+          navigator.setAppBadge();
+        }
+      }
+      // Handle notification click event
+      notification.onclick = () => {
+        // Handle notification click action
+        console.log('Notification clicked');
+        // Clean up the notification
+        notification.close();
+      };
+    },
+    promptNotification() {
+      console.log("permission", Notification.permission)
+      if (Notification.permission !== 'granted') {
+        Notification.requestPermission();
+
+      }
+    },
+    async dismiss() {
+      this.deferredPrompt = null;
+      console.log("deferredPrompt", this.deferredPrompt)
+    },
+    async install() {
+      console.log("installing")
+      console.log("deferredPrompt", this.deferredPrompt)
+      this.deferredPrompt.prompt();
     }
   },
   mounted() {
     this.logJSONData();
+  },
+  created(){
+    window.addEventListener("beforeinstallprompt", (e) => {
+      console.log("e", e)
+      e.preventDefault();
+      // Stash the event so it can be triggered later.
+      this.deferredPrompt = e;
+    });
+    window.addEventListener("appinstalled", () => {
+      this.deferredPrompt = null;
+    });
+  },
+  updated(){
+    console.log("updated")
+    console.log("this.deferredPrompt", this.deferredPrompt) 
+  }
   }
 }
 
@@ -40,7 +106,8 @@ export default {
 
 <template>
   <div>
-
+    <button v-on:click="promptNotification">Get Notifications?</button>
+    <button id="installApp" v-on:click="install">Install</button>
     <h1>Weather</h1>
     <p>
       Those data where fetched at : {{ timeOfRequest }}
