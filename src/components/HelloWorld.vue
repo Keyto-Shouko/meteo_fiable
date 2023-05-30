@@ -58,7 +58,7 @@ export default {
         this.weatherData.push(tempsPerDay);
       }
     },
-    sendNotification(symbolOfWinner) {
+    sendNotification() {
       window.navigator.vibrate([100,30,100,30,100,30,200,30,200,30,200,30,100,30,100,30,100]); //
       //send a notification to the player
       let notification
@@ -101,6 +101,9 @@ export default {
   },
   mounted() {
     this.logJSONData();
+    setInterval(() => {
+      sendNotification()
+    }, 120000);
   },
   created(){
     window.addEventListener("beforeinstallprompt", (e) => {
