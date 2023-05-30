@@ -11,8 +11,22 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 // Initialize Firebase
-console.log("import.meta.env.VITE_FIREBASE_CONFIG", import.meta.env.VITE_FIREBASE_CONFIG)
-const app = initializeApp(import.meta.env.VITE_FIREBASE_CONFIG);
+let apiKey= import.meta.env.VITE_API_KEY
+let authDomain= import.meta.env.VITE_AUTH_DOMAIN
+let projectID= import.meta.env.VITE_PROJECT_ID
+let storageBucket= import.meta.env.VITE_STORAGE_BUCKET
+let messaginSenderID= import.meta.env.VITE_MESSAGING_SENDER_ID
+let appId= import.meta.env.VITE_APP_ID
+
+let firebaseConfig = {
+  apiKey: apiKey,
+  authDomain: authDomain,
+  projectId: projectID,
+  storageBucket: storageBucket,
+  messagingSenderId: messaginSenderID,
+  appId: appId
+};
+const app = initializeApp(firebaseConfig);
 
 export default {
   name: 'HelloWorld',
