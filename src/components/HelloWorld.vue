@@ -11,6 +11,7 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 // Initialize Firebase
+console.log("import.meta.env.VITE_FIREBASE_CONFIG", import.meta.env.VITE_FIREBASE_CONFIG)
 const app = initializeApp(import.meta.env.VITE_FIREBASE_CONFIG);
 
 export default {
@@ -96,7 +97,6 @@ export default {
   updated(){
     console.log("updated")
     console.log("this.deferredPrompt", this.deferredPrompt) 
-  }
   }
 }
 
