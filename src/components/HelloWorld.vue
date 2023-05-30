@@ -26,6 +26,8 @@ let firebaseConfig = {
   messagingSenderId: messaginSenderID,
   appId: appId
 };
+
+console.log("firebaseConfig", firebaseConfig)
 const app = initializeApp(firebaseConfig);
 
 export default {
@@ -38,6 +40,9 @@ export default {
       weatherData: [],
       timeOfRequest: Date()
     }
+  },
+  beforeMount() {
+    console.log(apiKey);
   },
   methods: {
     async logJSONData() {
